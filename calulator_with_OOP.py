@@ -1,5 +1,6 @@
 # Step_01: Imports
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QGridLayout, QLineEdit
+from PyQt5.QtGui import QFont, QIcon
 
 # Step_02: Create Main window class inside this class define settings and ui
 class MainWindow(QWidget):
@@ -7,7 +8,8 @@ class MainWindow(QWidget):
         super().__init__()
 
         self.setWindowTitle("Calculator")
-        self.resize(300, 400)
+        self.resize(400, 600)
+        self.setWindowIcon(QIcon("CalcIcon.png"))
         # Call the initUI function
         self.initUI()
 
@@ -16,7 +18,9 @@ class MainWindow(QWidget):
 
         # Step_03: Add the app objects/widgets/GUI elements/ components
         self.text_box = QLineEdit()
+        #self.text_box.setFont(QFont("Helvetica", 32))
         self.text_box.setReadOnly(True)
+
 
         # We are using a loop to create the buttons, so after creating a grid object we will have a loop to follow the steps
         buttons = ["7", "8", "9", "+",
@@ -26,6 +30,8 @@ class MainWindow(QWidget):
 
         clear = QPushButton("Clear")
         delete = QPushButton("<")
+        #clear.setStyleSheet("QPushButton { font-family: 'Comic Sans MS'; font-size: 25pt; padding: 10px; }")
+        #delete.setStyleSheet("QPushButton { font-family: 'Comic Sans MS'; font-size: 25pt; padding: 10px; }")
 
         # Step_04: Add the design layout
         # Steps:
@@ -50,9 +56,10 @@ class MainWindow(QWidget):
         col = 0
         for text in buttons:
             button = QPushButton(text)
+
             grid.addWidget(button, row, col)
             button.clicked.connect(self.button_clicked)
-
+            #button.setStyleSheet("QPushButton { font-family: 'Comic Sans MS'; font-size: 25pt; padding: 10px; }")
             col += 1
             if col > 3:
                 col = 0
@@ -62,6 +69,7 @@ class MainWindow(QWidget):
         master_layout.addLayout(row1)
         master_layout.addLayout(grid)
         master_layout.addLayout(row2)
+        master_layout.setContentsMargins(25,25,25,25)
 
         # 4
         self.setLayout(master_layout)
@@ -95,7 +103,39 @@ class MainWindow(QWidget):
 
 # Step_07: Create app and main window object
 app = QApplication([])
+# Step_08: Set global styles for the app
+app.setStyleSheet("""
+    QWidget {
+        background-color: #e8e8e1;
+    }
+
+    QLineEdit {
+        font-family: 'Comic Sans MS';
+        color: #03051f;
+        font-size: 32pt;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+    }
+
+    QPushButton {
+        font-family: 'Comic Sans MS';
+        color: #03051f;
+        font-size: 25pt;
+        padding: 10px;
+        border: None;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+    }
+
+    QPushButton:hover {
+        background-color: #dcdcdd;
+    }
+""")
+
 main_window = MainWindow()
-# Step_08: Show the main window and execute app
+#main_window.setStyleSheet("QWidget {background-color: #e8e8e1}")
+# Step_09: Show the main window and execute app
 main_window.show()
 app.exec_()
