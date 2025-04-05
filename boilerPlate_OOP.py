@@ -46,8 +46,9 @@ class MainWindow(QWidget):
     # e.g. def calculate_result(): ...
 
 
-# Step_07: Show the main window and execute app
+# Step_07: Create app and main window object
 app = QApplication([])
 main_window = MainWindow()
+# Step 08: Show the main window and execute app
 main_window.show()
 app.exec_()
